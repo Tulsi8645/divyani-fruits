@@ -39,7 +39,7 @@ export const products: Product[] = [
     specs: '4.5cm+ bulbs',
     packing: '5kg / 10kg',
     description: 'High-quality white garlic with strong flavor and long storage life. Essential ingredient for Nepalese cuisine.',
-    image: 'https://images.pexels.com/photos/1340258/pexels-photo-1340258.jpeg?auto=compress&cs=tinysrgb&w=800'
+    image: 'https://images.unsplash.com/photo-1559454473-27bc85c67728?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1015'
   },
   {
     id: '5',
