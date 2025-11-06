@@ -1,62 +1,123 @@
-import { Apple, TruckIcon, Snowflake, Award, ArrowRight, Package, MapPin } from 'lucide-react';
+import { Apple, TruckIcon, Snowflake, Award, ArrowRight, Package, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigation } from '../context/NavigationContext';
+import { useState, useEffect } from 'react';
 
 export const Home = () => {
   const { navigateTo } = useNavigation();
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const slides = [
+    {
+      image: 'https://images.unsplash.com/photo-1610397962076-02407a169a5b?w=1600&q=80',
+      title: 'Premium Fresh Fruits',
+      subtitle: 'Directly from China to Nepal with Cold Chain Excellence',
+      cta: 'Explore Products'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1600&q=80',
+      title: '40+ Years of Legacy',
+      subtitle: 'Nepal\'s First Fuji Apple Importer - A Family Tradition',
+      cta: 'Our Story'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1609780447631-05b93e5a88ea?w=1600&q=80',
+      title: '200+ Containers Annually',
+      subtitle: 'Nationwide Distribution Across Major Nepal Markets',
+      cta: 'Contact Us'
+    }
+  ];
+
+ useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-green-600/10 to-green-400/5 dark:from-green-900/20 dark:to-green-800/10"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative">
-          <div className="text-center space-y-6 animate-fadeIn">
-            <div className="inline-block">
-              <span className="px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 rounded-full text-sm font-semibold">
-                🍎 40+ Years of Legacy
-              </span>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-green-900 dark:text-green-100 leading-tight">
-              Nepal's Trusted
-              <br />
-              <span className="text-green-600 dark:text-green-400">Fresh Fruit Importer</span>
-            </h1>
-            <p className="text-lg md:text-xl text-green-700 dark:text-green-300 max-w-3xl mx-auto leading-relaxed">
-              Welcome to Divyani Enterprises Pvt Ltd, your reliable partner in importing high-quality fresh fruits and agro commodities from China to Nepal.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <button
-                onClick={() => navigateTo('products')}
-                className="px-8 py-4 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-2"
-              >
-                <span>View Products</span>
-                <ArrowRight className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => navigateTo('contact')}
-                className="px-8 py-4 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-green-700 dark:text-green-300 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-green-200 dark:border-green-700"
-              >
-                Contact Us
-              </button>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-16 text-center">
-            {[
-              { icon: '🍎', label: 'Fuji Apples' },
-              { icon: '🍇', label: 'Red Globe Grapes' },
-              { icon: '🍐', label: 'Ya Pears' },
-              { icon: '🧄', label: 'Garlic' },
-              { icon: '🌱', label: 'Ginger' }
-            ].map((item, idx) => (
-              <div
-                key={idx}
-                className="p-4 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="text-3xl mb-2">{item.icon}</div>
-                <p className="text-sm font-medium text-green-800 dark:text-green-300">{item.label}</p>
+        {/* Hero Slider Section */}
+      <section className="relative h-[600px] md:h-[700px] overflow-hidden">
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentSlide ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70 z-10"></div>
+            <img
+              src={slide.image}
+              alt={slide.title}
+              className="w-full h-full object-cover"
+            />
+            
+            {/* Slide Content */}
+            <div className="absolute inset-0 z-20 flex items-end">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-24 w-full">
+                <div className="max-w-3xl space-y-6 animate-fadeIn">
+                  <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white leading-tight drop-shadow-2xl">
+                    {slide.title}
+                  </h1>
+                  <p className="text-xl md:text-2xl text-white/95 leading-relaxed drop-shadow-lg">
+                    {slide.subtitle}
+                  </p>
+                  <button
+                    onClick={() => navigateTo(index === 0 ? 'products' : index === 1 ? 'about' : 'contact')}
+                    className="px-8 py-4 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold shadow-2xl hover:shadow-green-500/50 transition-all duration-300 inline-flex items-center space-x-2 hover:scale-105"
+                  >
+                    <span>{slide.cta}</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
-            ))}
+            </div>
           </div>
+        ))}
+
+        {/* Navigation Arrows */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 p-3 bg-white/20 opacity-50 hover:bg-white/30 backdrop-blur-sm rounded-full transition-all duration-300 group"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 p-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full transition-all duration-300 group"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
+        </button>
+
+        {/* Slide Indicators */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex space-x-3">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`transition-all duration-300 rounded-full ${
+                index === currentSlide
+                  ? 'w-12 h-3 bg-white'
+                  : 'w-3 h-3 bg-white/50 hover:bg-white/75'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
         </div>
       </section>
 
